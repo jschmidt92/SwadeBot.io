@@ -16,25 +16,17 @@ defineProps<{ to: any, name: string }>()
     </div>
     <div class="card-footer" style="z-index: 10 !important;">
       <div class="d-flex justify-content-around">
-        <RouterLink class="link-dark text-decoration-none" :to="to">View</RouterLink>
-        <RouterLink class="link-dark text-decoration-none" :to="to">Update</RouterLink>
-        <RouterLink class="link-dark text-decoration-none" :to="to">Delete</RouterLink>
+        <RouterLink class="nav-link" :to="to">View</RouterLink>
+        <RouterLink class="nav-link" :to="to">Update</RouterLink>
+        <RouterLink class="nav-link" :to="to">Delete</RouterLink>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.card {
-  position: relative;
-}
-
 .card-avatar {
-  position: absolute;
-  bottom: 45px; /* Adjust this as needed */
-  left: 5px; /* Adjust this as needed */
+  bottom: 45px;
+  left: 5px;
 }
 </style>
-
-
-

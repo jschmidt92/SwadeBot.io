@@ -1,5 +1,19 @@
 <script setup lang="ts">
 import DiscordBtn from './DiscordBtn.vue'
+
+let theme = 'dark'
+let label = 'Toggle Light Mode'
+
+function toggleTheme() {  
+  const element = document.body
+  const label = document.getElementById('flexSwitchLabel')
+
+  element.dataset.bsTheme = element.dataset.bsTheme === 'light' ? 'dark' : 'light'
+
+  if (label !== null) {
+    label.innerHTML = element.dataset.bsTheme === 'light' ? "Toggle Dark Mode" : "Toggle Light Mode"
+  }
+}
 </script>
 
 <template>
@@ -21,13 +35,17 @@ import DiscordBtn from './DiscordBtn.vue'
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Characters
             </a>
-            <ul class="dropdown-menu bg-dark">
-              <router-link class="nav-link" to="/characters">View Characters</router-link>
-              <router-link class="nav-link" to="/characters/create">Create Character</router-link>
+            <ul class="dropdown-menu">
+              <router-link class="dropdown-item" to="/characters">View Characters</router-link>
+              <router-link class="dropdown-item" to="/characters/create">Create Character</router-link>
             </ul>
           </li>
         </ul>
-        <div class="d-flex">
+        <div class="d-flex flex-row align-items-center">
+          <div class="form-check form-switch form-check-reverse me-2">
+            <input class="form-check-input p-2 bg-dark" type="checkbox" id="flexSwitchCheckChecked" :checked="theme === 'dark'" @click="toggleTheme()">
+            <label class="form-check-label text-light" for="flexSwitchCheckChecked" id="flexSwitchLabel">{{ label }}</label>
+          </div>
           <discord-btn />
         </div>
       </div>

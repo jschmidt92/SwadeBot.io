@@ -8,41 +8,14 @@ from db.repository.encounter import retrieve_encounter
 from db.repository.gear import retrieve_gear
 from db.repository.power import retrieve_power
 from db.repository.weapon import retrieve_weapon
+from db.repository.utilities import (
+    _get_monster_by_id,
+    _get_monster_by_name,
+    _get_user_by_id,
+    _update_monster_dict_field,
+    MonsterNotFoundError,
+)
 from schemas.monster import MonsterCreate, UpdateMonster
-
-
-class MonsterNotFoundError(Exception):
-    pass
-
-
-class UserNotFoundError(Exception):
-    pass
-
-
-def _get_monster_by_id(id: int, db: Session) -> Monster:
-    monster = db.query(Monster).filter(Monster.id == id).first()
-    if monster is None:
-        raise MonsterNotFoundError(f"Monster with id {id} not found")
-    return monster
-
-
-def _get_user_by_id(id: int, db: Session) -> User:
-    user = db.query(User).filter(User.discord_id == id).first()
-    if user is None:
-        raise UserNotFoundError(f"User with id {id} not found")
-    return user
-
-
-def _get_monster_by_name(name: str, db: Session) -> Monster:
-    monster = db.query(Monster).filter(Monster.monster_name == name).first()
-    if monster is None:
-        raise UserNotFoundError(f"Monster with name {name} not found")
-    return monster
-
-
-def _update_dict_field(monster_field: dict, update_field: dict):
-    if monster_field is not None and update_field is not None:
-        monster_field.update(update_field)
 
 
 def create_new_monster(monster: MonsterCreate, db: Session) -> Monster:
@@ -106,10 +79,10 @@ def list_user_monsters(id: int, db: Session) -> List[Monster]:
 def update_monster(monster_id: int, monster: UpdateMonster, db: Session) -> Monster:
     row = _get_monster_by_id(monster_id, db)
 
-    _update_dict_field(row.attributes, monster.attributes)
-    _update_dict_field(row.skills, monster.skills)
-    _update_dict_field(row.gear, monster.gear)
-    _update_dict_field(row.damage, monster.damage)
+    _update_monster_dict_field(row.attributes, monster.attributes)
+    _update_monster_dict_field(row.skills, monster.skills)
+    _update_monster_dict_field(row.gear, monster.gear)
+    _update_monster_dict_field(row.damage, monster.damage)
 
     for var, value in monster.dict(
         exclude={"attributes", "skills", "gear", "damage"}, exclude_unset=True

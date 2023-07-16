@@ -2,18 +2,8 @@ from sqlalchemy.orm import Session
 from typing import Union, List, Optional
 
 from db.models.power import Power
+from db.repository.utilities import _get_power_by_id
 from schemas.power import PowerCreate, UpdatePower
-
-
-class PowerNotFoundError(Exception):
-    pass
-
-
-def _get_power_by_id(power_id: int, db: Session) -> Power:
-    power = db.query(Power).filter(Power.id == power_id).first()
-    if power is None:
-        raise PowerNotFoundError(f"Power with id {power_id} not found")
-    return power
 
 
 def create_new_power(power: PowerCreate, db: Session) -> Power:

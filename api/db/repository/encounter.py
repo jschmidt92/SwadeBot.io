@@ -6,18 +6,8 @@ from db.models.association import encounter_character, encounter_monster
 from db.models.character import Character
 from db.models.encounter import Encounter
 from db.models.monster import Monster
+from db.repository.utilities import _get_encounter_by_id
 from schemas.encounter import EncounterCreate, UpdateEncounter
-
-
-class EncounterNotFoundError(Exception):
-    pass
-
-
-def _get_encounter_by_id(encounter_id: int, db: Session) -> Encounter:
-    encounter = db.query(Encounter).filter(Encounter.id == encounter_id).first()
-    if encounter is None:
-        raise EncounterNotFoundError(f"Encounter with id {encounter_id} not found")
-    return encounter
 
 
 def create_new_encounter(encounter: EncounterCreate, db: Session) -> Encounter:

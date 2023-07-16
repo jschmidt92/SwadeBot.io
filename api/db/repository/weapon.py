@@ -2,18 +2,8 @@ from sqlalchemy.orm import Session
 from typing import Union, List, Optional
 
 from db.models.weapon import Weapon
+from db.repository.utilities import _get_weapon_by_id
 from schemas.weapon import WeaponCreate, UpdateWeapon
-
-
-class WeaponNotFoundError(Exception):
-    pass
-
-
-def _get_weapon_by_id(weapon_id: int, db: Session) -> Weapon:
-    weapon = db.query(Weapon).filter(Weapon.id == weapon_id).first()
-    if weapon is None:
-        raise WeaponNotFoundError(f"Weapon with id {weapon_id} not found")
-    return weapon
 
 
 def create_new_weapon(weapon: WeaponCreate, db: Session) -> Weapon:

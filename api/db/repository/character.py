@@ -7,42 +7,15 @@ from db.models.user import User
 from db.repository.encounter import retrieve_encounter
 from db.repository.gear import retrieve_gear
 from db.repository.power import retrieve_power
+from db.repository.utilities import (
+    _get_user_by_id,
+    _get_character_by_id,
+    _get_character_by_name,
+    _update_character_dict_field,
+    CharacterNotFoundError,
+)
 from db.repository.weapon import retrieve_weapon
 from schemas.character import CharacterCreate, UpdateCharacter
-
-
-class CharacterNotFoundError(Exception):
-    pass
-
-
-class UserNotFoundError(Exception):
-    pass
-
-
-def _get_character_by_id(id: int, db: Session) -> Character:
-    character = db.query(Character).filter(Character.id == id).first()
-    if character is None:
-        raise CharacterNotFoundError(f"Character with id {id} not found")
-    return character
-
-
-def _get_user_by_id(id: int, db: Session) -> User:
-    user = db.query(User).filter(User.discord_id == id).first()
-    if user is None:
-        raise UserNotFoundError(f"User with id {id} not found")
-    return user
-
-
-def _get_character_by_name(name: str, db: Session) -> Character:
-    character = db.query(Character).filter(Character.character_name == name).first()
-    if character is None:
-        raise UserNotFoundError(f"Character with name {name} not found")
-    return character
-
-
-def _update_dict_field(character_field: dict, update_field: dict):
-    if character_field is not None and update_field is not None:
-        character_field.update(update_field)
 
 
 def create_new_character(character: CharacterCreate, db: Session) -> Character:
@@ -112,10 +85,10 @@ def update_character(
 ) -> Character:
     row = _get_character_by_id(character_id, db)
 
-    _update_dict_field(row.attributes, character.attributes)
-    _update_dict_field(row.skills, character.skills)
-    _update_dict_field(row.gear, character.gear)
-    _update_dict_field(row.damage, character.damage)
+    _update_character_dict_field(row.attributes, character.attributes)
+    _update_character_dict_field(row.skills, character.skills)
+    _update_character_dict_field(row.gear, character.gear)
+    _update_character_dict_field(row.damage, character.damage)
 
     for var, value in character.dict(
         exclude={"attributes", "skills", "gear", "damage"}, exclude_unset=True

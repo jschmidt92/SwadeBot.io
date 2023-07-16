@@ -2,18 +2,8 @@ from sqlalchemy.orm import Session
 from typing import Union, List, Optional
 
 from db.models.gear import Gear
+from db.repository.utilities import _get_gear_by_id
 from schemas.gear import GearCreate, UpdateGear
-
-
-class GearNotFoundError(Exception):
-    pass
-
-
-def _get_gear_by_id(gear_id: int, db: Session) -> Gear:
-    gear = db.query(Gear).filter(Gear.id == gear_id).first()
-    if gear is None:
-        raise GearNotFoundError(f"Gear with id {gear_id} not found")
-    return gear
 
 
 def create_new_gear(gear: GearCreate, db: Session) -> Gear:

@@ -9,71 +9,18 @@ from db.repository.character import (
     add_gear_to_character,
     add_weapon_to_character,
 )
-
-
-class CharacterNotFoundError(Exception):
-    pass
-
-
-class GearNotFoundError(Exception):
-    pass
-
-
-class UserNotFoundError(Exception):
-    pass
-
-
-class WeaponNotFoundError(Exception):
-    pass
-
-
-def _get_character_by_id(id: int, db: Session) -> Character:
-    character = db.query(Character).filter(Character.id == id).first()
-    if character is None:
-        raise CharacterNotFoundError(f"Character with id {id} not found")
-    return character
-
-
-def _get_character_by_name(name: str, db: Session) -> Character:
-    character = db.query(Character).filter(Character.character_name == name).first()
-    if character is None:
-        raise UserNotFoundError(f"Character with name {name} not found")
-    return character
-
-
-def _get_gear_by_id(gear_id: int, db: Session) -> Gear:
-    gear = db.query(Gear).filter(Gear.id == gear_id).first()
-    if gear is None:
-        raise GearNotFoundError(f"Gear with id {gear_id} not found")
-    return gear
-
-
-def _get_gear_by_name(gear_name: int, db: Session) -> Gear:
-    gear = db.query(Gear).filter(Gear.name == gear_name).first()
-    if gear is None:
-        raise GearNotFoundError(f"Gear with name {gear_name} not found")
-    return gear
-
-
-def _get_weapon_by_name(weapon_name: int, db: Session) -> Weapon:
-    weapon = db.query(Weapon).filter(Weapon.name == weapon_name).first()
-    if weapon is None:
-        raise WeaponNotFoundError(f"Weapon with name {weapon_name} not found")
-    return weapon
-
-
-def _get_user_by_id(id: int, db: Session) -> User:
-    user = db.query(User).filter(User.discord_id == id).first()
-    if user is None:
-        raise UserNotFoundError(f"User with id {id} not found")
-    return user
-
-
-def _get_weapon_by_id(weapon_id: int, db: Session) -> Weapon:
-    weapon = db.query(Weapon).filter(Weapon.id == weapon_id).first()
-    if weapon is None:
-        raise WeaponNotFoundError(f"Weapon with id {weapon_id} not found")
-    return weapon
+from db.repository.utilities import (
+    _get_user_by_id,
+    _get_character_by_id,
+    _get_character_by_name,
+    _get_gear_by_id,
+    _get_gear_by_name,
+    _get_weapon_by_id,
+    _get_weapon_by_name,
+    CharacterNotFoundError,
+    GearNotFoundError,
+    WeaponNotFoundError,
+)
 
 
 def buy_weapon(
