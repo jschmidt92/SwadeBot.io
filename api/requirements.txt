@@ -1,0 +1,14 @@
+alembic
+fastapi
+fastapi-discord
+flask
+jinja2
+msgpack
+oauthlib
+pydantic
+pytest
+python-dotenv
+SQLAlchemy
+ujson
+uvicorn
+zenora
