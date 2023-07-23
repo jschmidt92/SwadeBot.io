@@ -183,7 +183,7 @@ const create = async() => {
 </script>
 
 <template>
-  <div class="col-6 offset-sm-3">
+  <div class="col-md-6 offset-md-3">
     <form class="mb-3" @submit.prevent="create">
       <BaseInput v-model="form.user_id" label="Discord User ID:" type="text" class="mb-3" disabled hidden />
       <BaseInput v-model="form.character_name" label="Character Name:" type="text" class="mb-3" />

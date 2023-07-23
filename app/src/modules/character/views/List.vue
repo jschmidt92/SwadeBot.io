@@ -13,7 +13,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="col-6 offset-md-3">    
+  <div class="col-md-6 offset-md-3">
     <template v-if="characters.length">
       <div class="row">
         <div class="col-md-12" v-for="character in characters" :key="character.id">

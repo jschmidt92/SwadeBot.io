@@ -198,7 +198,7 @@ const create = async() => {
 </script>
 
 <template>
-  <div class="col-6 offset-sm-3">
+  <div class="col-md-6 offset-md-3">
     <form class="mb-3" @submit.prevent="create">
       <BaseInput v-model="form.monster_name" label="Monster Name:" type="text" class="mb-3" />
       <BaseListBox v-model="form.race" :options="races" class="mb-3" />

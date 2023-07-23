@@ -1,9 +1,9 @@
-from dotenv import load_dotenv
+from collections import namedtuple
+from dataclasses import dataclass
+from typing import List
 from discord.ext import commands
 from api.EncounterAPI import *
-from models.EncounterModel import Encounter
 import discord
-import os
 import random
 
 load_dotenv()
@@ -12,6 +12,7 @@ MAIN_CHANNEL_ID = int(os.getenv("MAIN_CHANNEL_ID"))
 NO_MORE_CARDS = "No more cards"
 
 
+@dataclass
 class Player:
     def __init__(self, name, damage, monster=False):
         self.name = name
@@ -108,6 +109,81 @@ class Deck:
         return (self.suits_value[suit], self.ranks_value[rank])
 
 
+# @dataclass
+# class Player:
+#     name: str
+#     damage: dict
+#     monster: bool = False
+#     cards: List[str] = None
+#     card_values: List[tuple] = None
+
+#     def __post_init__(self):
+#         if self.cards is None:
+#             self.cards = []
+#         if self.card_values is None:
+#             self.card_values = []
+
+#     def get_cards(self):
+#         return ", ".join(self.cards)
+
+#     def deal_card(self, card, card_value):
+#         self.cards.append(card)
+#         self.card_values.append(card_value)
+
+
+# class Deck:
+#     def __init__(self):
+#         self.ranks = [
+#             "Joker",
+#             "Ace",
+#             "King",
+#             "Queen",
+#             "Jack",
+#             "10",
+#             "9",
+#             "8",
+#             "7",
+#             "6",
+#             "5",
+#             "4",
+#             "3",
+#             "2",
+#         ]
+#         self.ranks_value = {rank: 15 - i for i, rank in enumerate(self.ranks)}
+#         self.suits = ["Spades", "Hearts", "Diamonds", "Clubs"]
+#         self.suits_value = {suit: 4 - i for i, suit in enumerate(self.suits)}
+#         self.cards = []
+#         self.remaining = 0
+#         self.players = {}
+
+#     def create_deck(self):
+#         self.cards = [f"{rank} of {suit}" for rank in self.ranks for suit in self.suits]
+#         self.cards.extend(["Joker", "Joker"])  # Add two Joker cards
+#         self.remaining = len(self.cards)
+#         random.shuffle(self.cards)
+
+#     def deal_card(self, player_name):
+#         if not self.cards:
+#             return "No more cards in the deck."
+
+#         card = self.cards.pop(0)
+#         card_value = self.get_card_value(card)
+#         self.players[player_name].deal_card(card, card_value)
+
+#     def reset_deck(self):
+#         self.create_deck()
+#         for player in self.players.values():
+#             player.cards = []
+#             player.card_values = []
+
+#     def get_card_value(self, card):
+#         if card == "Joker":
+#             return (5, 15)  # Joker is the highest value card.
+
+#         rank, suit = card.split(" of ")
+#         return (self.suits_value[suit], self.ranks_value[rank])
+
+
 class NoMoreCardsError(Exception):
     """Raised when there are no more cards in the deck."""
 
@@ -132,9 +208,9 @@ class DeckOfCards(commands.Cog):
         try:
             await ctx.message.delete()
         except discord.errors.NotFound:
-            pass  # The message is already deleted.
+            pass
         except discord.errors.Forbidden:
-            pass  # Bot doesn't have the required permission to delete the message.
+            pass
 
     @commands.command(aliases=["di", "init"])
     async def deal_initiative(

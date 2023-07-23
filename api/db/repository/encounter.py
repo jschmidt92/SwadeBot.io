@@ -1,3 +1,4 @@
+import sqlalchemy
 from sqlalchemy.orm import Session
 from sqlalchemy import join, select
 from typing import List, Optional
@@ -64,6 +65,12 @@ def delete_encounter(encounter_id: int, db: Session) -> Encounter:
     db.delete(encounter)
     db.commit()
     return encounter
+
+
+def sqlalchemy_obj_to_dict(obj):
+    return {
+        c.key: getattr(obj, c.key) for c in sqlalchemy.inspect(obj).mapper.column_attrs
+    }
 
 
 def list_characters(encounter_id: int, db: Session) -> List[Character]:

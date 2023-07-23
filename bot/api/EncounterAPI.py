@@ -27,8 +27,8 @@ def delete_encounter(id: int):
     return requests.delete(f"{BASE_URL}/encounters/{id}")
 
 
-def get_all_encounters():
-    return requests.get(f"{BASE_URL}/encounters")
+def get_all_in_encounter(id: int):
+    return requests.get(f"{BASE_URL}/encounters/{id}")
 
 
 def get_encounter_characters(id: int):
@@ -37,6 +37,10 @@ def get_encounter_characters(id: int):
 
 def get_encounter_monsters(id: int):
     return requests.get(f"{BASE_URL}/encounters/{id}/monsters")
+
+
+def list_encounters():
+    return requests.get(f"{BASE_URL}/encounters")
 
 
 def remove_character_encounter(id: int, encounter_id: list[int]):

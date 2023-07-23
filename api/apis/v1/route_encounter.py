@@ -15,12 +15,13 @@ from db.repository.character import retrieve_character
 from db.repository.monster import retrieve_monster
 from db.repository.encounter import (
     create_new_encounter,
-    retrieve_encounter,
+    delete_encounter,
     list_characters,
     list_encounters,
     list_monsters,
+    retrieve_encounter,
+    sqlalchemy_obj_to_dict,
     update_encounter,
-    delete_encounter,
 )
 
 router = APIRouter()
@@ -217,3 +218,26 @@ def remove_monster_from_encounter(
     db.commit()
 
     return monster
+
+
+# @router.get(
+#     "/encounters/{id}", response_model=ShowEncounter, status_code=status.HTTP_200_OK
+# )
+# def get_an_encounter(id: int, db: Session = Depends(get_db)):
+#     encounter = retrieve_encounter(id, db)
+#     characters = [sqlalchemy_obj_to_dict(char) for char in list_characters(id, db)]
+#     monsters = [sqlalchemy_obj_to_dict(monst) for monst in list_monsters(id, db)]
+
+#     if not encounter or not characters or not monsters:
+#         raise HTTPException(
+#             detail=f"No data found for encounter id {id}",
+#             status_code=status.HTTP_404_NOT_FOUND,
+#         )
+
+#     return {
+#         "id": encounter.id,
+#         "name": encounter.name,
+#         "notes": encounter.notes,
+#         "characters": characters,
+#         "monsters": monsters,
+#     }

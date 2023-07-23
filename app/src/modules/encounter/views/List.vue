@@ -12,7 +12,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="col-6 offset-md-3">    
+  <div class="col-md-6 offset-md-3">
     <template v-if="encounters.length">
       <div class="row">
         <div class="col-md-12">

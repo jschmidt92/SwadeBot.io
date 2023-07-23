@@ -37,7 +37,7 @@ const create = async() => {
 </script>
 
 <template>
-  <div class="col-6 offset-sm-3">
+  <div class="col-md-6 offset-md-3">
     <form class="mb-3" @submit.prevent="create">
       <BaseInput v-model="form.name" label="Encounter Name:" type="text" class="mb-3" />
       <BaseInput v-model="form.notes" label="Hindrances:" type="text" class="mb-3" />

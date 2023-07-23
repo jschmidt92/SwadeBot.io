@@ -14,7 +14,7 @@ onMounted(async () => {
 
 <template>
   <div v-if="monsterStore.error">{{ monsterStore.error }}</div>
-  <div class="col-6 offset-md-3" v-else-if="monsterStore.monster" style="padding-bottom: 1em;">
+  <div class="col-md-6 offset-md-3" v-else-if="monsterStore.monster" style="padding-bottom: 1em;">
     <h1>{{ monsterStore.monster.monster_name }}</h1>
     <ul class="list-group border rounded-0">
       <li class="list-group-item border-0 pt-2 pb-0">Race: <span class="fw-semibold">{{ monsterStore.monster.race }}</span></li>
